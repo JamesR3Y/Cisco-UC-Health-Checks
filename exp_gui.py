@@ -23,6 +23,15 @@ def expressway_alarm_cleanup(node, username, password):
         'Call license limit reached'
     ]
 
+    ignore_alarm_id = [
+        '15011',
+        '15010',
+        '30001',
+        '30004',
+        '30019',
+        '30020'
+    ]
+
     path_to_webdriver = 'D:\\NetOps Apps\\Scripts\\uc_checks\\WebDrivers\\chromedriver.exe'
 
     if '-expe-' in str(node) or '-EXPE-' in str(node):
@@ -90,8 +99,13 @@ def expressway_alarm_cleanup(node, username, password):
         alarm_title = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[2]')
         alarm_state = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[4]')
         alarm_peer = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[6]')
+        alarm_id = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[10]')
 
-        if alarm_title.text in license_alarms and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
+    #    if alarm_title.text in license_alarms and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
+    #        driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[1]').click()
+    #        logging.debug('## {} - {}.expressway_alarm_cleanup() -- ALARM {} SELECTED'.format(__name__, node, alarm_index))
+
+        if alarm_id.text in ignore_alarm_id and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
             driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[1]').click()
             logging.debug('## {} - {}.expressway_alarm_cleanup() -- ALARM {} SELECTED'.format(__name__, node, alarm_index))
 
