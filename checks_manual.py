@@ -338,6 +338,6 @@ def scheduler(start_time):
 if __name__ == '__main__':
 
     format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.DEBUG, datefmt="%H:%M:%S")
+    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
 
     run_and_email()

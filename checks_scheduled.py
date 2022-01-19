@@ -96,7 +96,7 @@ def core_checks():
 
 
             try:
-                stopped_srvs = conn.get_stopped_srvs()
+                stopped_srvs = conn.get_stopped_srvs(role)
                 logging.debug('## {} - SSHConnect("{}").get_stopped_srvs() -- {}'.format(__name__, node, stopped_srvs))
 
                 if len(stopped_srvs) >= 1:
