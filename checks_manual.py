@@ -94,7 +94,7 @@ def core_checks():
 
 
             try:
-                stopped_srvs = conn.get_stopped_srvs()
+                stopped_srvs = conn.get_stopped_srvs(role)
                 logging.debug('## {} - SSHConnect("{}").get_stopped_srvs() -- {}'.format(__name__, node, stopped_srvs))
 
                 if len(stopped_srvs) >= 1:
@@ -102,8 +102,8 @@ def core_checks():
 
             except Exception as e:
                 logging.debug('## {} - SSHConnect("{}").get_stopped_srvs() -- EXCEPTION -- {}'.format(__name__, node, e))
-                nodes_stpd_srvs.append(node + ': An exception occurred. Check node manually')
-
+                nodes_stpd_srvs.append(node + ': An exception occurred. Check node manually')    
+            
 
             try:
                 certs = conn.get_certs()
@@ -338,6 +338,6 @@ def scheduler(start_time):
 if __name__ == '__main__':
 
     format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
+    logging.basicConfig(format=format, level=logging.DEBUG, datefmt="%H:%M:%S")
 
     run_and_email()

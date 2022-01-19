@@ -174,7 +174,7 @@ class SSHConnect:
         return uptime, unit
 
 
-    def get_stopped_srvs(self):
+    def get_stopped_srvs(self, role = False):
 
         """
         Returns any stopped services on the target server.
@@ -192,19 +192,37 @@ class SSHConnect:
             'Cisco Intercluster Lookup Service[STOPPED]  Commanded Out of Service',
             'Connection HTTPS Directory Feeder[STOPPED]  Commanded Out of Service'
             ]
+        
+        ignore_list_pub = [
+            'Cisco CAR DB[STOPPED]  Commanded Out of Service', 
+            'Cisco CAR Scheduler[STOPPED]  Commanded Out of Service', 
+            'Cisco SOAP - CallRecord Service[STOPPED]  Commanded Out of Service',
+            'Connection HTTPS Directory Feeder[STOPPED]  Commanded Out of Service'
+            ]        
 
-        resp = self.run_cmd('utils service list')
-        logging.debug('## {} - {}.get_stopped_srvs() -- RESP == {}'.format(__name__, self, resp))
-        stopped_list = [elem for elem in resp if '[STOPPED]' in elem and 'Not Activated' not in elem]
+        if not role:
+            resp = self.run_cmd('utils service list')
+            logging.debug('## {} - {}.get_stopped_srvs() -- RESP == {}'.format(__name__, self, resp))
+            stopped_list = [elem for elem in resp if '[STOPPED]' in elem and 'Not Activated' not in elem]
+    
+            for elem in ignore_list:
+                if elem in stopped_list:
+                    stopped_list.remove(elem)
 
-        ## Compares the returned list of stopped services to the above list of services usually disbaled on subscriber nodes.
-        for elem in ignore_list:
-            if elem in stopped_list:
-                stopped_list.remove(elem)
+            logging.debug('## {} - {}.get_stopped_srvs() -- STOPPED SERVICES SUB == {}'.format(__name__, self, stopped_list))
+            return stopped_list
 
-        logging.debug('## {} - {}.get_stopped_srvs() -- STOPPED SERVICES == {}'.format(__name__, self, stopped_list))
+        else:
+            resp = self.run_cmd('utils service list')
+            logging.debug('## {} - {}.get_stopped_srvs() -- RESP == {}'.format(__name__, self, resp))
+            stopped_list = [elem for elem in resp if '[STOPPED]' in elem and 'Not Activated' not in elem]
+    
+            for elem in ignore_list_pub:
+                if elem in stopped_list:
+                    stopped_list.remove(elem)
 
-        return stopped_list
+            logging.debug('## {} - {}.get_stopped_srvs() -- STOPPED SERVICES PUB == {}'.format(__name__, self, stopped_list))
+            return stopped_list
 
 
     def get_certs(self):

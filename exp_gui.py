@@ -23,7 +23,7 @@ def expressway_alarm_cleanup(node, username, password):
         'Call license limit reached'
     ]
 
-    ignore_alarm_id = [
+    ignore_alarm = [
         '15011',
         '15010',
         '30001',
@@ -99,13 +99,13 @@ def expressway_alarm_cleanup(node, username, password):
         alarm_title = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[2]')
         alarm_state = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[4]')
         alarm_peer = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[6]')
-        alarm_id = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[10]')
+        alarm_id = driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[10]/a')
 
     #    if alarm_title.text in license_alarms and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
     #        driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[1]').click()
     #        logging.debug('## {} - {}.expressway_alarm_cleanup() -- ALARM {} SELECTED'.format(__name__, node, alarm_index))
 
-        if alarm_id.text in ignore_alarm_id and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
+        if alarm_id.text in ignore_alarm and alarm_peer.text == 'This system' and alarm_state.text != 'Acknowledged':
             driver.find_element_by_xpath(f'//*[@id="warninglist_tbody"]/tr[{alarm_index}]/td[1]').click()
             logging.debug('## {} - {}.expressway_alarm_cleanup() -- ALARM {} SELECTED'.format(__name__, node, alarm_index))
 
