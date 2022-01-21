@@ -342,4 +342,4 @@ if __name__ == '__main__':
     format = "%(asctime)s: %(message)s"
     logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
 
-    scheduler('07:30')
+    scheduler('07:00')
