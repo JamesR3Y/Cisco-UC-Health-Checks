@@ -157,7 +157,7 @@ def core_checks():
         hostnames = [row['hostname'] for row in csv.DictReader(f) if 'cte' not in row['region'] and 'exp' not in row['device']]
 
     ## Map each server in the hostnames[] list to the inner _core_checks() function and create a thread for it.
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as ex:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as ex:
         results = [ex.map(_core_checks, hostnames)]
 
         for f in results:
