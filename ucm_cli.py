@@ -190,7 +190,9 @@ class SSHConnect:
             'Cisco License Manager[STOPPED]  Commanded Out of Service', 
             'Cisco SOAP - CallRecord Service[STOPPED]  Commanded Out of Service',
             'Cisco Intercluster Lookup Service[STOPPED]  Commanded Out of Service',
-            'Connection HTTPS Directory Feeder[STOPPED]  Commanded Out of Service'
+            'Connection HTTPS Directory Feeder[STOPPED]  Commanded Out of Service',
+            'Cisco Device Activation Service[STOPPED]  Commanded Out of Service',
+            'Cisco Smart License Manager[STOPPED]  Commanded Out of Service'
             ]
         
         ignore_list_pub = [
