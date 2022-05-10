@@ -29,6 +29,7 @@ def expressway_alarm_cleanup(node, username, password):
         '30001',
         '30004',
         '30019',
+        '30028',
         '30020'
     ]
 
